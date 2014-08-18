@@ -45,8 +45,10 @@ class Result {
 // PHP Version
 if ( version_compare( PHP_VERSION, '5.5.0', '>=' ) ) {
 	$result = new Result( PHP_VERSION, Result::PERFECT );
-} elseif ( version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
+} elseif ( version_compare( PHP_VERSION, '5.3.0', '>' ) ) {
 	$result = new Result( PHP_VERSION . ' is still supported.', Result::OK );
+} elseif ( version_compare( PHP_VERSION, '5.3', '=' ) ) {
+	$result = new Result( PHP_VERSION . ' is at the end of life but works.', Result::WARNING );
 } elseif ( version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
 	$result = new Result( PHP_VERSION . ' works but is not supported by PHP.', Result::WARNING );
 } elseif ( version_compare( PHP_VERSION, '5.2.0', '<' ) ) {

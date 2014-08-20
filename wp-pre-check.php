@@ -153,6 +153,27 @@ if ( $zip ) {
 }
 $messages['Unpacking ZIP-Archives'] = $result;
 
+$userInfo = posix_getpwuid( posix_geteuid() );
+
+// running user
+$uid = $userInfo['uid'];
+if (fileowner(__FILE__) != $uid) {
+	$result = new Result( 'You uploaded this file as a different user than Apache runs with.', Result::WARNING );
+} else {
+	$result = new Result( 'File-owner and Apache User match.', Result::OK );
+}
+$messages['Apache User'] = $result;
+
+// running group
+$pid = $userInfo['pid'];
+if (filegroup(__FILE__) != $gid) {
+	$result = new Result( 'You uploaded this file as a different user-group than Apache runs with.', Result::WARNING );
+} else {
+	$result = new Result( 'File-owner and Apache Group match.', Result::OK );
+}
+$messages['Apache User-Group'] = $result;
+
+
 $format = " [%s] %s (%s)\n";
 
 if ( PHP_SAPI != 'cli' ) {

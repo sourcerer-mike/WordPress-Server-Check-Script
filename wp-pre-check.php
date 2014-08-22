@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 /**
  * Check if your WordPress is able to run on this server.
  *
@@ -158,16 +162,31 @@ $userInfo = posix_getpwuid( posix_geteuid() );
 // running user
 $uid = $userInfo['uid'];
 if (fileowner(__FILE__) != $uid) {
-	$result = new Result( 'You uploaded this file as a different user than Apache runs with.', Result::WARNING );
+	$result = new Result(
+		sprintf(
+			'You uploaded this file as a different user (%s) than Apache runs with (%s).',
+			fileowner(__FILE__),
+			$uid
+		),
+		Result::WARNING
+	);
 } else {
 	$result = new Result( 'File-owner and Apache User match.', Result::OK );
 }
 $messages['Apache User'] = $result;
 
+
 // running group
-$pid = $userInfo['pid'];
+$gid = $userInfo['gid'];
 if (filegroup(__FILE__) != $gid) {
-	$result = new Result( 'You uploaded this file as a different user-group than Apache runs with.', Result::WARNING );
+	$result = new Result(
+		sprintf(
+			'You uploaded this file as a different user-group (%s) than Apache runs with (%s).',
+			filegroup(__FILE__),
+			$gid
+		),
+		Result::WARNING
+	);
 } else {
 	$result = new Result( 'File-owner and Apache Group match.', Result::OK );
 }

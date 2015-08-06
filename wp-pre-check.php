@@ -115,14 +115,6 @@ if ( ini_get( 'file_uploads' ) ) {
 }
 $messages['File uploads'] = $result;
 
-// safe_mode
-if ( ini_get( 'safe_mode' ) ) {
-	$result = new Result( 'you are safe - a bit', Result::OK );
-} else {
-	$result = new Result( 'safe_mode is not enabled', Result::ERROR );
-}
-$messages['Safe-Mode'] = $result;
-
 // short open tag
 if ( ini_get( 'short_open_tag' ) ) {
 	$result = new Result( 'you are allowed to mess it up', Result::OK );
@@ -133,7 +125,7 @@ $messages['Lazy coding'] = $result;
 
 // display errors
 if ( ! ini_get( 'display_errors' ) ) {
-	$result = new Result( 'does not show problems', Result::OK );
+	$result = new Result( 'display_errors is disables', Result::OK );
 } else {
 	$result = new Result( 'display_errors is enabled - hopefully this is a developer server', Result::WARNING );
 }
@@ -150,7 +142,7 @@ $messages['Packing ZIP-Archives'] = $result;
 
 // unzip
 $zip = shell_exec( 'unzip -v' );
-if ( $zip ) {
+if ( $zip ) {	
 	$result = new Result( 'your shell has unzip', Result::OK );
 } else {
 	$result = new Result( 'no unzip - no plugins, themes or updates', Result::WARNING );

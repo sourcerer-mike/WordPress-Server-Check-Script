@@ -47,15 +47,11 @@ class Result {
 }
 
 // PHP Version
-if ( version_compare( PHP_VERSION, '5.5.0', '>=' ) ) {
+if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	$result = new Result( PHP_VERSION, Result::PERFECT );
-} elseif ( version_compare( PHP_VERSION, '5.3.0', '>' ) ) {
+} elseif ( version_compare( PHP_VERSION, '5.5.0', '>' ) ) {
 	$result = new Result( PHP_VERSION . ' is still supported.', Result::OK );
-} elseif ( version_compare( PHP_VERSION, '5.3', '=' ) ) {
-	$result = new Result( PHP_VERSION . ' is at the end of life but works.', Result::WARNING );
-} elseif ( version_compare( PHP_VERSION, '5.2.0', '>=' ) ) {
-	$result = new Result( PHP_VERSION . ' works but is not supported by PHP.', Result::WARNING );
-} elseif ( version_compare( PHP_VERSION, '5.2.0', '<' ) ) {
+} elseif ( version_compare( PHP_VERSION, '5.5.0', '<' ) ) {
 	$result = new Result( PHP_VERSION . ' is too old!', Result::ERROR );
 } else {
 	$result = new Result( 'Could not determine PHP-Version!', Result::ERROR );
@@ -145,7 +141,7 @@ $zip = shell_exec( 'unzip -v' );
 if ( $zip ) {	
 	$result = new Result( 'your shell has unzip', Result::OK );
 } else {
-	$result = new Result( 'no unzip - no plugins, themes or updates', Result::WARNING );
+	$result = new Result( 'no unzip: impossible installing plugins/themes or doing updates', Result::WARNING );
 }
 $messages['Unpacking ZIP-Archives'] = $result;
 
